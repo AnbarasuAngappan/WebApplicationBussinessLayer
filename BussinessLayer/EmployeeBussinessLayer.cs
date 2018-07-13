@@ -89,6 +89,55 @@ namespace BussinessLayer
             }
         }
 
-        }      
+        public void UpdateEmployee(Employee employee)
+        {
+            string connectionstring = ConfigurationManager.ConnectionStrings["EmployeeContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionstring))
+            {
+                SqlCommand sqlCommand = new SqlCommand("spUpdateEmployee", con);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter sqlParameterID = new SqlParameter();
+                sqlParameterID.ParameterName = "@EmployeeID";
+                sqlParameterID.Value = employee.EmployeeID;
+                sqlCommand.Parameters.Add(sqlParameterID);
+
+                SqlParameter sqlParameterName = new SqlParameter();
+                sqlParameterName.ParameterName = "@EmployeeName";
+                sqlParameterName.Value = employee.EmployeeName;
+                sqlCommand.Parameters.Add(sqlParameterName);
+
+                SqlParameter sqlParameterAge = new SqlParameter();
+                sqlParameterAge.ParameterName = "@EmployeeAge";
+                sqlParameterAge.Value = employee.EmployeeAge;
+                sqlCommand.Parameters.Add(sqlParameterAge);
+
+                SqlParameter sqlParameterGender = new SqlParameter();
+                sqlParameterGender.ParameterName = "@EmployeeGender";
+                sqlParameterGender.Value = employee.EmployeeGender;
+                sqlCommand.Parameters.Add(sqlParameterGender);
+
+                SqlParameter sqlParameterCity = new SqlParameter();
+                sqlParameterCity.ParameterName = "@EmployeeCity";
+                sqlParameterCity.Value = employee.EmployeeCity;
+                sqlCommand.Parameters.Add(sqlParameterCity);
+
+                SqlParameter sqlParameterEmpDepID = new SqlParameter();
+                sqlParameterEmpDepID.ParameterName = "@EmpDepartmentID";
+                sqlParameterEmpDepID.Value = employee.EmpDepartmentID;
+                sqlCommand.Parameters.Add(sqlParameterEmpDepID);
+
+                SqlParameter sqlParameterDepartment = new SqlParameter();
+                sqlParameterDepartment.ParameterName = "@DepartmentID";
+                sqlParameterDepartment.Value = employee.DepartmentID;
+                sqlCommand.Parameters.Add(sqlParameterDepartment);
+
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+
+            }
+        }
+
+    }      
     }
 

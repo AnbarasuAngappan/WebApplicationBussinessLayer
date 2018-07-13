@@ -49,5 +49,37 @@ namespace WebApplicationBussinessLayer.Controllers
            
         }
 
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            Employee employee = employeeBussinessLayer.Employees.Single(emp => emp.EmployeeID == id);
+            return View(employee);
+        }
+
+
+        [HttpPost, ActionName("Edit")]
+        public ActionResult EditPost(string id)
+        {
+            try
+            {
+
+                Employee employee = employeeBussinessLayer.Employees.Single(x => x.EmployeeID == id);
+                if (ModelState.IsValid)
+                {                   
+                    TryUpdateModel<Employee>(employee,new string[] { "EmployeeID", "EmployeeName", "EmployeeAge", "EmployeeGender", "EmployeeCity", "EmpDepartmentID", "DepartmentID" });
+                    employee.EmpDepartmentID = employee.DepartmentID;
+                    employeeBussinessLayer.UpdateEmployee(employee);
+                    return RedirectToAction("Index");
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+           
+        }
+
     }
 }
