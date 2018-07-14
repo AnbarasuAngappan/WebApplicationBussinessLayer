@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace BussinessLayer
 {
-   public class EmployeeBussinessLayer
+    public class EmployeeBussinessLayer
     {
         public IEnumerable<Employee> Employees
         {
@@ -22,7 +22,7 @@ namespace BussinessLayer
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     con.Open();
                     SqlDataReader sqlDataReader = cmd.ExecuteReader();
-                    while(sqlDataReader.Read())
+                    while (sqlDataReader.Read())
                     {
                         Employee employee = new Employee();
                         employee.EmployeeID = Convert.ToString(sqlDataReader["EmployeeID"]);
@@ -138,6 +138,6 @@ namespace BussinessLayer
             }
         }
 
-    }      
     }
+}
 
