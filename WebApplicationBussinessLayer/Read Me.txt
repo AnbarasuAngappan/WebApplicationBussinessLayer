@@ -2,7 +2,7 @@ This Project Contains:-
 1.)Bussiness Layer / Data Access Layer
 2.)Heart Part of this is solution is that, we are using the SQL data privider, and sql command reader to Connect the application with data in the database.
 3.)Connection String in Web Comfig.
-4.)By the Help full of the bussinesslater class object we are manually calling the CURD Opearation Function, to perform all the operation.
+4.)By the Help full of the bussinesslayer class object we are manually calling the CURD Opearation Function, to perform all the operation.
 
 
 Key Points:-
@@ -10,3 +10,9 @@ Key Points:-
 *White List and black List.
 *Include Properties and the Exclude Properties
 *This Properties will gove the command to the Studio update property binding, what are all the binding columns can be update and what are all the columns should not be get update is can be, done by this Include and Exclude Properties.
+
+
+
+Added the Sorting
+Added the Search Filter
+Paging.MVC

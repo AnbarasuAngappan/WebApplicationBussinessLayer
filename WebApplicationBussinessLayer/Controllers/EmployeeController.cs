@@ -14,13 +14,18 @@ namespace WebApplicationBussinessLayer.Controllers
 
         public ActionResult Index(string sortOrder,string searchString)
         {
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";           
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.CitySortParm = String.IsNullOrEmpty(sortOrder) ? "city_desc" : "";
 
             var emp = from e in employeeBussinessLayer.Employees select e;
+
             switch (sortOrder)
             {
                 case "name_desc":
                     emp = emp.OrderByDescending(s => s.EmployeeName);
+                    break;
+                case "city_desc":
+                    emp = emp.OrderByDescending(w => w.EmployeeCity);
                     break;
             }
 
@@ -29,6 +34,7 @@ namespace WebApplicationBussinessLayer.Controllers
                 emp = emp.Where(s => s.EmployeeName.Contains(searchString)
                                        || s.EmployeeCity.Contains(searchString));
             }
+
             //List<Employee> employees = employeeBussinessLayer.Employees.ToList();                       
             return View(emp.ToList());
         }

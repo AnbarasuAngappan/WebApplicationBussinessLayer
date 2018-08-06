@@ -12,9 +12,9 @@
     </p>
     @using (Html.BeginForm())
     {
-        <p>
-            Find by name and city: @Html.TextBox("SearchString")
-            <input type="submit" value="Search" />
+        <p style="float:right">
+            Find by Name and City: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" class="btn-primary" />
         </p>
     }
     <table class="table">
@@ -30,7 +30,8 @@
                 @Html.DisplayNameFor(model => model.EmployeeGender)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeCity)
+                @*@Html.DisplayNameFor(model => model.EmployeeCity)*@
+                @Html.ActionLink("Employee City", "Index", new { sortOrder = ViewBag.CitySortParm })
             </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.EmpDepartmentID)
