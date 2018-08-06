@@ -10,10 +10,18 @@
     <p>
         <input type='button' class="btn btn-success" value='Create User' onclick='window.location = "@Url.Action("Create", "Employee")";' />
     </p>
+    @using (Html.BeginForm())
+    {
+        <p>
+            Find by name and city: @Html.TextBox("SearchString")
+            <input type="submit" value="Search" />
+        </p>
+    }
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.EmployeeName)
+                @*@Html.DisplayNameFor(model => model.EmployeeName)*@
+                @Html.ActionLink("Employee Name", "Index", new { sortOrder = ViewBag.NameSortParm })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EmployeeAge)
@@ -59,8 +67,8 @@
                     <td>
                         <a href="@Url.Action("Edit","Employee",new { id=item.EmployeeID })" class="btn btn-primary">Edit</a>
                         <a href="@Url.Action("Delete","Employee",new { id=item.EmployeeID })" class="btn btn-danger">Delete</a>
-                     
-                        @*@Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |*@                    
+
+                        @*@Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |*@
                         @*<input type="submit" value="Delete" onclick="return confirm('Are You Sure Want to Delete this ID = @item.EmployeeID')" />*@
                         @*<a onclick="Delete(@item.EmployeeID)" class="btn btn-danger">Delete</a>*@
                     </td>

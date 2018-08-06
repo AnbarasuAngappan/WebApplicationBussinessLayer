@@ -11,11 +11,26 @@ namespace WebApplicationBussinessLayer.Controllers
     {
         // GET: Employee
         EmployeeBussinessLayer employeeBussinessLayer = new EmployeeBussinessLayer();
-        public ActionResult Index()
+
+        public ActionResult Index(string sortOrder,string searchString)
         {
-            
-            List<Employee> employees = employeeBussinessLayer.Employees.ToList();                       
-            return View(employees);
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";           
+
+            var emp = from e in employeeBussinessLayer.Employees select e;
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    emp = emp.OrderByDescending(s => s.EmployeeName);
+                    break;
+            }
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                emp = emp.Where(s => s.EmployeeName.Contains(searchString)
+                                       || s.EmployeeCity.Contains(searchString));
+            }
+            //List<Employee> employees = employeeBussinessLayer.Employees.ToList();                       
+            return View(emp.ToList());
         }
 
         [HttpGet]
