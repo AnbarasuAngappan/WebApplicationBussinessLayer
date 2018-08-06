@@ -1,0 +1,68 @@
+select * from Employeetable
+
+
+Create procedure spToGetAllEmployees
+as
+begin
+	select * from Employeetable
+
+	end
+
+
+
+
+	Create procedure spAddemployee
+	@EmployeeID nvarchar(50),
+	@EmployeeName nchar(10),
+	@EmployeeAge nchar(10),
+	@EmployeeGender nchar(10),
+	@EmployeeCity nchar(10),
+	@EmpDepartmentID nchar(10),
+	@DepartmentID nchar(10)
+
+	as
+	Begin
+	insert into Employeetable (EmployeeID,EmployeeName,EmployeeAge,EmployeeGender,
+	EmployeeCity,EmpDepartmentID,DepartmentID)
+	values(@EmployeeID,@EmployeeName,@EmployeeAge,@EmployeeGender,@EmployeeCity,@EmpDepartmentID,
+	@DepartmentID)
+	End
+
+	Create procedure spUpdateEmployee
+	@EmployeeID nvarchar(50),
+	@EmployeeName nchar(10),
+	@EmployeeAge nchar(10),
+	@EmployeeGender nchar(10),
+	@EmployeeCity nchar(10),
+	@EmpDepartmentID nchar(10),
+	@DepartmentID nchar(10)
+
+	as
+	Begin
+	update Employeetable set 						
+						EmployeeName = @EmployeeName,
+						EmployeeAge = @EmployeeAge,
+						EmployeeGender = @EmployeeGender,
+						EmployeeCity = @EmployeeCity,
+						EmpDepartmentID = @EmpDepartmentID,
+						DepartmentID = @DepartmentID
+			where EmployeeID = @EmployeeID
+	End
+
+
+	Create procedure spDeleteEmployee
+	@EmployeeID nvarchar(50),
+	@EmployeeName nchar(10),
+	@EmployeeAge nchar(10),
+	@EmployeeGender nchar(10),
+	@EmployeeCity nchar(10),
+	@EmpDepartmentID nchar(10),
+	@DepartmentID nchar(10)
+
+	as
+	BEGIN  
+	DELETE FROM Employeetable WHERE @EmployeeID = @EmployeeID 
+	END
+
+
+

@@ -7,7 +7,7 @@
 
 <div style="font-family:Arial">
     <br />
-    <p>  
+    <p>
         <input type='button' class="btn btn-success" value='Create User' onclick='window.location = "@Url.Action("Create", "Employee")";' />
     </p>
     <table class="table">
@@ -25,8 +25,8 @@
                 @Html.DisplayNameFor(model => model.EmployeeCity)
             </th>
             @*<th>
-                @Html.DisplayNameFor(model => model.EmpDepartmentID)
-            </th>*@
+                    @Html.DisplayNameFor(model => model.EmpDepartmentID)
+                </th>*@
             <th>
                 @Html.DisplayNameFor(model => model.DepartmentID)
             </th>
@@ -35,32 +35,49 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeAge)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeGender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeCity)
-                </td>
-                @*<td>
-                    @Html.DisplayFor(modelItem => item.EmpDepartmentID)
-                </td>*@
-                <td>
-                    @Html.DisplayFor(modelItem => item.DepartmentID)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.EmployeeID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.EmployeeID })
-                </td>
-            </tr>
+            using (Html.BeginForm("Delete", "Employee", new { id = item.EmployeeID }))
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeAge)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeGender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmployeeCity)
+                    </td>
+                    @*<td>
+                            @Html.DisplayFor(modelItem => item.EmpDepartmentID)
+                        </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DepartmentID)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit","Employee",new { id=item.EmployeeID })" class="btn btn-primary">Edit</a>
+                        <a href="@Url.Action("Delete","Employee",new { id=item.EmployeeID })" class="btn btn-danger">Delete</a>
+                     
+                        @*@Html.ActionLink("Details", "Details", new { id = item.EmployeeID }) |*@                    
+                        @*<input type="submit" value="Delete" onclick="return confirm('Are You Sure Want to Delete this ID = @item.EmployeeID')" />*@
+                        @*<a onclick="Delete(@item.EmployeeID)" class="btn btn-danger">Delete</a>*@
+                    </td>
+                </tr>
+            }
         }
 
     </table>
 </div>
+
+
+@section scripts{
+    <script>
+       function Delete(id) {
+            alertify.confirm('Web API', 'Are you sure want to delete this record?', function () {
+                window.location.href = '@Url.Action("Delete", "Employee")/' + id;
+            }, null);
+        }
+    </script>
+    }

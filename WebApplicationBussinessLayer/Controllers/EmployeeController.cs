@@ -23,7 +23,6 @@ namespace WebApplicationBussinessLayer.Controllers
         {
             return View();
         }
-
        
         [HttpPost, ActionName("Create")]
         public ActionResult CreatePost()//[Bind(Include = "EmployeeID,EmployeeName,EmployeeAge,EmployeeGender,EmployeeCity,EmpDepartmentID,DepartmentID")] Employee employee
@@ -56,18 +55,39 @@ namespace WebApplicationBussinessLayer.Controllers
             return View(employee);
         }
 
+        //[HttpPost, ActionName("Edit")]
+        //public ActionResult EditPost(string id)
+        //{
+        //    try
+        //    {
+        //        Employee employee = employeeBussinessLayer.Employees.Single(x => x.EmployeeID == id);
+        //        if (ModelState.IsValid)
+        //        {                    
+        //            TryUpdateModel(employee, new string[] { "EmployeeID","EmployeeAge", "EmployeeGender",
+        //                                                    "EmployeeCity", "EmpDepartmentID", "DepartmentID" }); //This is the White List and Black List----
+
+        //            employee.EmpDepartmentID = employee.DepartmentID;
+        //            employeeBussinessLayer.UpdateEmployee(employee);
+        //            return RedirectToAction("Index");
+        //        }
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(ex.Message);
+        //    }     
+        //}
 
         [HttpPost, ActionName("Edit")]
         public ActionResult EditPost(string id)
         {
             try
             {
-
                 Employee employee = employeeBussinessLayer.Employees.Single(x => x.EmployeeID == id);
+                employee.EmpDepartmentID = employee.DepartmentID;
+                TryUpdateModel<Employee>(employee);
                 if (ModelState.IsValid)
-                {                   
-                    TryUpdateModel<Employee>(employee,new string[] { "EmployeeID", "EmployeeName", "EmployeeAge", "EmployeeGender", "EmployeeCity", "EmpDepartmentID", "DepartmentID" });
-                    employee.EmpDepartmentID = employee.DepartmentID;
+                {                 
                     employeeBussinessLayer.UpdateEmployee(employee);
                     return RedirectToAction("Index");
                 }
@@ -75,11 +95,42 @@ namespace WebApplicationBussinessLayer.Controllers
             }
             catch (Exception ex)
             {
-
                 throw new Exception(ex.Message);
             }
-           
         }
 
+        public ActionResult Delete(string id)
+        {
+            try
+            {
+                Employee employee = employeeBussinessLayer.Employees.Single(y => y.EmployeeID == id);
+                if(employee == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(employee);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }           
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult Deletepost(string ID)
+        {
+            try
+            {
+                employeeBussinessLayer.DeleteEmployee(ID);
+                return RedirectToAction("Index");
+            }
+            catch (Exception Ex)
+            {
+                throw new Exception(Ex.Message);
+            }
+        }
     }
 }

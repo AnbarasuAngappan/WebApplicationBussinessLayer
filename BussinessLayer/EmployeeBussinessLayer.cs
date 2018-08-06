@@ -138,6 +138,24 @@ namespace BussinessLayer
             }
         }
 
+        public void DeleteEmployee(string EmployeeID)
+        {
+            string connectionstring = ConfigurationManager.ConnectionStrings["EmployeeContext"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(connectionstring))
+            {
+                SqlCommand sqlCommand = new SqlCommand("spDeleteEmployee", con);
+                sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
+
+                SqlParameter sqlParameterID = new SqlParameter();
+                sqlParameterID.ParameterName = "@EmployeeID";
+                sqlParameterID.Value = EmployeeID;
+                sqlCommand.Parameters.Add(sqlParameterID);
+
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+            }
+        }
+
     }
 }
 
